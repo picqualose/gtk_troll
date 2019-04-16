@@ -22,9 +22,11 @@ int main (int argc, char *argv[])
     GtkWidget *button_o;    
     GtkWidget *button_n;
     GtkWidget *label;
+    GtkWidget *image;
 
     gtk_init (&argc, &argv);
 
+/// DEFINITION DES OBJETS 
 
     //creation de la fenetre 
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -46,7 +48,13 @@ int main (int argc, char *argv[])
     //Definitions des boutons  
     button_o = gtk_button_new_with_label ("Oui");
     button_n = gtk_button_new_with_label ("Non");
-    label = gtk_label_new("TEST LABEL");
+    label = gtk_label_new("Voulez-vous formater votre disque ?");
+    
+    //Image 
+    image = gtk_image_new_from_file ("/home/picqualose/superbeelive/test/gtk_troll/images/blob.png");
+
+
+///MISE EN PLACE 
 
     //Ajout de la box principale dans la fenetre
     gtk_container_add (GTK_CONTAINER (window), box_principal);
@@ -55,6 +63,7 @@ int main (int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(box_principal), box1, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box_principal), box2, TRUE, FALSE, 0);
     // Mise en place du texte dans la box 1 
+    gtk_box_pack_start(GTK_BOX(box1), image, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(box1), label, TRUE, TRUE, 0);
 
     // Mise en place des boutons oui et non dans la box2
@@ -63,6 +72,7 @@ int main (int argc, char *argv[])
     
 
     //Afficheage des elements 
+   gtk_widget_show (image); 
    gtk_widget_show (label); 
    gtk_widget_show (button_o); 
    gtk_widget_show (button_n); 
