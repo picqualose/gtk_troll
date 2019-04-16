@@ -19,7 +19,6 @@ int main (int argc, char *argv[])
     GtkWidget *box_principal;
     GtkWidget *box1;
     GtkWidget *box2;
-    GtkWidget *button_test;
     GtkWidget *button_o;    
     GtkWidget *button_n;
     GtkWidget *label;
@@ -47,8 +46,7 @@ int main (int argc, char *argv[])
     //Definitions des boutons  
     button_o = gtk_button_new_with_label ("Oui");
     button_n = gtk_button_new_with_label ("Non");
-    button_test = gtk_button_new_with_label ("ATTENTION");
-    label = gtk_label_set_text ("TEST LABEL");
+    label = gtk_label_new("TEST LABEL");
 
     //Ajout de la box principale dans la fenetre
     gtk_container_add (GTK_CONTAINER (window), box_principal);
@@ -57,7 +55,6 @@ int main (int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(box_principal), box1, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box_principal), box2, TRUE, FALSE, 0);
     // Mise en place du texte dans la box 1 
-    gtk_box_pack_start(GTK_BOX(box1), button_test, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(box1), label, TRUE, TRUE, 0);
 
     // Mise en place des boutons oui et non dans la box2
@@ -65,7 +62,7 @@ int main (int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(box2), button_n, TRUE, TRUE, 0);
     
 
-
+    //Afficheage des elements 
    gtk_widget_show (label); 
    gtk_widget_show (button_o); 
    gtk_widget_show (button_n); 
