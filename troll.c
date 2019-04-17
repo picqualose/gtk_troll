@@ -10,25 +10,36 @@ void destroy (GtkWidget *widget, gpointer data)
 
 void oui  (GtkWidget *widget, gpointer data)
 {
-    g_print ("oui\n");
-   
-    GtkWidget *button_o;    
+   g_print ("oui\n");
+   gtk_button_set_label( (GtkButton*) widget, "Coucou" ) ;  
+   gtk_button_set_label( (GtkButton*) data, "Olivia" ) ;  
+    //GtkWidget *button_o;    
     
     //Definitions des boutons  
-    button_o = gtk_button_new_with_label ("Non");
+   // button_o = gtk_button_new_with_label ("Non");
+  //  button_o = gtk_button_get_label ("Non");
+}
+
+
+static gboolean mouse(GtkWidget *widget,gpointer user_data) {
+
+
+g_print("bouge\n") ;
 
 }
 
-void non  (GtkWidget *widget, gpointer data)
-{
-    g_print ("non\n");
+
+//void non  (GtkWidget *widget, gpointer data)
+//{
+    //g_print ("non\n");
    
-    GtkWidget *button_n;    
+  //  GtkWidget *button_n;    
     
     //Definitions des boutons  
-    button_n = gtk_button_new_with_label ("oui");
+//    button_n = gtk_button_new_with_label ("oui");
+//}
 
-}
+
 
 
 
@@ -46,6 +57,7 @@ int main (int argc, char *argv[])
     GtkWidget *button_n;
     GtkWidget *label;
     GtkWidget *image;
+    GtkWidget *barre;
 
     gtk_init (&argc, &argv);
 
@@ -62,12 +74,11 @@ int main (int argc, char *argv[])
 
     //Definition des boxs
         //Box Principale qui contient tout
-    box_principal = gtk_vbox_new(FALSE, 0);
+    box_principal = gtk_box_new( GTK_ORIENTATION_VERTICAL, 0);
         //Box du Message 
-    box1 = gtk_vbox_new(FALSE, 0);
+    box1 = gtk_box_new( GTK_ORIENTATION_VERTICAL, 0);
         //Box boutons "Oui - Non "
-    box2 = gtk_hbox_new(FALSE, 0);  
-
+    box2 = gtk_box_new( GTK_ORIENTATION_HORIZONTAL, 0);
     
 
     //Definitions des boutons  
@@ -78,8 +89,10 @@ int main (int argc, char *argv[])
     //Image 
     image = gtk_image_new_from_file ("images/blob.png");
 
+    //Barre 
+      barre = gtk_level_bar_new();
 
-///MISE EN PLACE 
+    ///MISE EN PLACE 
 
     //Ajout de la box principale dans la fenetre
     gtk_container_add (GTK_CONTAINER (window), box_principal);
@@ -89,16 +102,18 @@ int main (int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(box_principal), box2, TRUE, FALSE, 0);
     // Mise en place du texte dans la box 1 
     gtk_box_pack_start(GTK_BOX(box1), image, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(box1), label, TRUE, TRUE, 0);
-
+    gtk_box_pack_start(GTK_BOX(box1), label, TRUE, TRUE, 0); 
+    gtk_box_pack_start(GTK_BOX(box1), barre, TRUE, TRUE, 0);
+    
     // Mise en place des boutons oui et non dans la box2
     gtk_box_pack_start(GTK_BOX(box2), button_o, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(box2), button_n, TRUE, TRUE, 0);
    
 //FONCTIONS DES ELEMENTS 
     // Appelle d'une fonction si on clique dessus
-    gtk_signal_connect (GTK_OBJECT (button_o), "clicked", GTK_SIGNAL_FUNC(oui), NULL);
-    gtk_signal_connect (GTK_OBJECT (button_n), "clicked", GTK_SIGNAL_FUNC(non), NULL);
+     g_signal_connect (button_o, "clicked", G_CALLBACK(oui), button_n);
+     g_signal_connect (button_n, "enter",  G_CALLBACK(mouse), NULL);
+//     g_signal_connect (GTK_OBJECT (button_n), "enter", GTK_SIGNAL_FUNC(mouse), NULL);
 
 
     //Afficheage des elements 
@@ -110,6 +125,7 @@ int main (int argc, char *argv[])
    gtk_widget_show (box1); 
    gtk_widget_show (box2); 
    gtk_widget_show (window); 
+   gtk_widget_show (barre);
     
     gtk_main ();
     return 0;
