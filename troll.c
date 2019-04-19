@@ -8,13 +8,40 @@ void destroy (GtkWidget *widget, gpointer data)
     gtk_main_quit ();
 }
 
+void clique (GtkWidget *widget, gpointer data)
+{
+    GtkWidget *window2;
+    GtkWidget *image2;
+    GtkWidget *box_w2;
+
+    box_w2 = gtk_box_new( GTK_ORIENTATION_VERTICAL, 0);
+    window2 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+
+    gtk_container_add (GTK_CONTAINER (window2), box_w2);
+    
+
+    image2 = gtk_image_new_from_file ("images/beusous.png");
+    
+
+    gtk_box_pack_start(GTK_BOX(box_w2), image2, TRUE, FALSE, 0);
+    
+    gtk_widget_show (box_w2);
+    gtk_widget_show (image2);
+    gtk_widget_show (window2);
+
+   // gtk_main_quit ();
+}
+
+
 void oui  (GtkWidget *widget, gpointer data)
 {
+    //Fonction qui change le label du bouton "non" en "oui" des qu'on passe dessus 
    gchar* bouton;
    gchar* bouton2;
    bouton = gtk_button_get_label ((GtkButton*) widget);
    bouton2 = gtk_button_get_label ((GtkButton*) data);
    
+
 
   // g_print ("%s\n",bouton2);
   // g_print ("%s\n",bouton);
@@ -87,19 +114,31 @@ int main (int argc, char *argv[])
 
     //Definitions des boutons 
 
+    //Test deux deux maniere d'attribuer un label a un bouton : en deux etapes
     button_o = gtk_button_new ();
     gtk_button_set_label ((GtkButton*)button_o,"Oui");
     button_n = gtk_button_new ();
     gtk_button_set_label ((GtkButton*)button_n,"Non");
 
-  //  button_o = gtk_button_new_with_label ("Oui");
-  //  button_n = gtk_button_new_with_label ("Non");
-    button_quit = gtk_button_new ();
+    //En une etape : 
+
+  /* button_o = gtk_button_new_with_label ("Oui");
+    button_n = gtk_button_new_with_label ("Non"); */
+
+        //Les deux sont equivalentes 
+
+
+        //Button Quit 
+
+     button_quit = gtk_button_new ();
     //gtk_button_set_image (button_quit, "/image/blob.png");
-    label = gtk_label_new("FAIS LE BASIOU");
     
+     //Creation du bouton puis definition de ses attributs 
+     label = gtk_label_new("");
+     gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"black\" font=\"42\"><b>FAIS LE BASIOU</b></span>");
+
     //Image 
-    image = gtk_image_new_from_file ("images/blob.png");
+     image = gtk_image_new_from_file ("images/blob.png");
 
     //Barre 
       barre = gtk_level_bar_new();
@@ -126,9 +165,7 @@ int main (int argc, char *argv[])
     // Appelle d'une fonction si on clique dessus
      g_signal_connect (button_o, "enter", G_CALLBACK(oui), button_n);
      g_signal_connect (button_n, "enter", G_CALLBACK(oui), button_o);
-//     g_signal_connect (button_n, "enter",  G_CALLBACK(mouse), NULL);
-//     g_signal_connect (GTK_OBJECT (button_n), "enter", GTK_SIGNAL_FUNC(mouse), NULL);
-
+     g_signal_connect (button_o, "clicked", G_CALLBACK(clique),NULL );
 
     //Afficheage des elements 
    gtk_widget_show (image); 
